@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+    web:
+        build: .
+        ports:
+            - '5000:5000'
+        depends_on:
+            - db
+        environment:
+            - DATABASE_URL=mysql+pymysql://root:password@db/mydatabase
+
+    db:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: mydatabase
+        volumes:
+            - mariadb_data:/var/lib/mysql
+
+volumes:
+    mariadb_data:
